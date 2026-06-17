@@ -25,9 +25,11 @@ app.get("/", async (req, res) => {
 
 // ユーザーを追加するボタンが押されたときの処理じゃ
 app.post("/users", async (req, res) => {
-  const name = req.body.name;
+  const { name, age } = req.body;
   if (name) {
-    await prisma.user.create({ data: { name } });
+    await prisma.user.create({ 
+      data: { name, age: age ? Number(age) : null } 
+    });
   }
   // 追加し終わったらトップページに戻るのじゃ
   res.redirect("/");
